@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+    <div id="buttonsDiv">
+
+    </div>
+
+    <form id="userForm">
+        <label for="userInput">Add a Topic</label>
+        <input type="text" name="userInput" id="userInput">
+        <input type="submit" value="Add" id="addButton">
+    </form>
+    
+</body>
+
+
+<script>
+        var topics = [
+            "president",
+            "car",
+            "robot",
+            "tree",
+            "goblin",
+            "candy",
+            "ship"
+        ]
+    
+    // For each topic, create a button.  The button will be a static giphy image.
+
+    function addButton(element) {
+        var button=$('<button>').text(element);
+        $(button).attr('id',element);
+        $(button).addClass('topicButton');
+        $('#buttonsDiv').append(button);
+    }
+    function renderButtons() {
+        topics.forEach(element => {
+            addButton(element);
+        });
+    }
+
+    $(document).on('load', renderButtons());
+
+    $('#userForm').on("submit", function() {
+        console.log(userInput.value);
+        topics.push(userInput.value);
+        addButton(userInput.value);
+    });
+
+    //this is so that pressing enter will be the same as a button click
+    userInput.addEventListener("keyup", function(event) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            // Trigger the button element with a click
+            document.getElementById("#addButton").click();
+        }
+    });
+    
+    </script>
+    
+
+
+</html>
