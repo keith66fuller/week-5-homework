@@ -6,11 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="./assets/javascript/giphyImages.js"></script>
 
 </head>
 
-
+<style>
+    .giphyImg {
+        height: 170px;
+        width: auto;/*maintain aspect ratio*/
+        max-width: 500px;
+    }
+</style>
 
 
 
@@ -24,73 +31,10 @@
     <form id="userForm">
         <label for="userInput">Add a Topic</label>
         <input type="text" name="userInput" id="userInput">
-        <input type="button" value="Add" id="addButton">
+        <input type="submit" value="Add" id="addButton">
     </form>
+
+    <div id="imagesDiv"></div>
     
 </body>
-
-
-<script>
-        var topics = [
-            "president",
-            "car",
-            "robot",
-            "tree",
-            "goblin",
-            "candy",
-            "ship"
-        ]
-    
-    // For each topic, create a button.  The button will be a static giphy image.
-
-    function addButton(element) {
-        var button=$('<button>').text(element);
-        $(button).attr('id',element);
-        $(button).addClass('topicButton');
-        $('#buttonsDiv').append(button);
-    }
-    function renderButtons() {
-        topics.forEach(element => {
-            addButton(element);
-        });
-    }
-
-    $(document).on('load', renderButtons());
-
-    $('#addButton').on("click", function() {
-        console.log(userInput.value);
-        var newTopic = userInput.value;
-        $('#userInput').val('');
-        var aNum = RegExp('/^[A-Za-z0-9]+$/');
-        if (! aNum.test(newTopic)) {
-            console.log(`${newTopic} not alphanumeric`);
-            return
-        };
-        if (newTopic == '') {
-            console.log('blank topic');
-            return
-        };
-        if (topics.indexOf(newTopic) >= 0) {
-            console.log(`Topic ${newTopic} already exists`);
-            return
-        };
-        topics.push(newTopic);
-        addButton(newTopic);
-    });
-
-    //this is so that pressing enter will be the same as a button click
-    // userInput.addEventListener("keyup", function(event) {
-    //     // Cancel the default action, if needed
-    //     event.preventDefault();
-    //     // Number 13 is the "Enter" key on the keyboard
-    //     if (event.keyCode === 13) {
-    //         // Trigger the button element with a click
-    //         document.getElementById("#addButton").click();
-    //     }
-    // });
-    
-    </script>
-    
-
-
 </html>
