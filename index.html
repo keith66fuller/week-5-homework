@@ -24,7 +24,7 @@
     <form id="userForm">
         <label for="userInput">Add a Topic</label>
         <input type="text" name="userInput" id="userInput">
-        <input type="submit" value="Add" id="addButton">
+        <input type="button" value="Add" id="addButton">
     </form>
     
 </body>
@@ -57,22 +57,37 @@
 
     $(document).on('load', renderButtons());
 
-    $('#userForm').on("submit", function() {
+    $('#addButton').on("click", function() {
         console.log(userInput.value);
-        topics.push(userInput.value);
-        addButton(userInput.value);
+        var newTopic = userInput.value;
+        $('#userInput').val('');
+        var aNum = RegExp('/^[A-Za-z0-9]+$/');
+        if (! aNum.test(newTopic)) {
+            console.log(`${newTopic} not alphanumeric`);
+            return
+        };
+        if (newTopic == '') {
+            console.log('blank topic');
+            return
+        };
+        if (topics.indexOf(newTopic) >= 0) {
+            console.log(`Topic ${newTopic} already exists`);
+            return
+        };
+        topics.push(newTopic);
+        addButton(newTopic);
     });
 
     //this is so that pressing enter will be the same as a button click
-    userInput.addEventListener("keyup", function(event) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Number 13 is the "Enter" key on the keyboard
-        if (event.keyCode === 13) {
-            // Trigger the button element with a click
-            document.getElementById("#addButton").click();
-        }
-    });
+    // userInput.addEventListener("keyup", function(event) {
+    //     // Cancel the default action, if needed
+    //     event.preventDefault();
+    //     // Number 13 is the "Enter" key on the keyboard
+    //     if (event.keyCode === 13) {
+    //         // Trigger the button element with a click
+    //         document.getElementById("#addButton").click();
+    //     }
+    // });
     
     </script>
     
