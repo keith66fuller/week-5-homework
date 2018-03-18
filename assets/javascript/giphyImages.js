@@ -1,5 +1,4 @@
 $('document').ready( function() {
-    console.log("document ready!");
     var topics = [
         "president",
         "car",
@@ -9,6 +8,20 @@ $('document').ready( function() {
         "candy",
         "ship"
     ];
+
+    $.ajax({
+        url: "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+        method: 'GET',
+    })
+    .done(function(response) {
+        console.log(response);
+        response.forEach(element => {
+            topics.push(element.word);
+        });
+        renderButtons();
+    })
+
+
     var aNum = new RegExp(/^[A-Za-z0-9 ]+$/);
     
     // For each topic, create a button.  The button will be a static giphy image.
@@ -32,9 +45,12 @@ $('document').ready( function() {
             console.log(response);
             response.data.forEach(element => {
                 var url = element.images.preview_gif.url;
-                var rating = element.rating;
+                var rating = element.rating.toUpperCase();
+                
                 var image = $('<img>').attr('src',url).addClass('giphyImg');
-                $('#imagesDiv').append(image);
+                var caption = $('<figcaption>').text(`Rating: ${rating}`)
+                var newDiv = $('<div>').append(caption).append(image);
+                $('#imagesDiv').append(newDiv);
                 
             });
         })
@@ -52,7 +68,7 @@ $('document').ready( function() {
         });
     }
 
-    renderButtons();
+    // renderButtons();
 
     $('#userForm').on('submit', function(event) {
         //So that the submit event does not reload the page, which resets the value of the topics array and wipes
@@ -77,28 +93,4 @@ $('document').ready( function() {
         topics.push(newTopic);
         addButton(newTopic);
     });
-
-    // $('.topicButton').on("click", function(element) {
-    //     console.log(element);
-    //     console.log(element.target.id);
-    //     var query = element.target.id;
-    //     var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=Rg9Rfrh8KQEOzilbobJEVYSckFcwRfEN&q=${query}&limit=10&offset=0&lang=en`;
-        
-    //     $.ajax({
-    //         url: queryUrl,
-    //         method: 'GET',
-    //     })
-    //     .done(function(response) {
-    //         $('#imagesDiv').empty();
-    //         console.log(response);
-    //         response.data.forEach(element => {
-    //             var url = element.images.preview_gif.url;
-    //             var rating = element.rating;
-    //             var image = $('<img>').attr('src',url).addClass('giphyImg');
-    //             $('#imagesDiv').append(image);
-                
-    //         });
-    //     })
-        
-    // });
 });

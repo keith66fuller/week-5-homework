@@ -6,35 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+    <script src='https://s3.amazonaws.com/rapidapi-prod-fe_static/rapidapi.min.js'></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="./assets/javascript/giphyImages.js"></script>
+    <link rel="stylesheet" type="text/css" href="./assets/css/giphyImages.css">
 
 </head>
 
-<style>
-    .giphyImg {
-        height: 170px;
-        width: auto;/*maintain aspect ratio*/
-        max-width: 500px;
-    }
-</style>
 
 
 
 
 <body>
+<div class="grid-container">
+    <div class="buttons" id="buttonsDiv"></div>
 
-    <div id="buttonsDiv">
-
-    </div>
-
-    <form id="userForm">
+    <form class="form" id="userForm">
         <label for="userInput">Add a Topic</label>
         <input type="text" name="userInput" id="userInput">
         <input type="submit" value="Add" id="addButton">
     </form>
 
-    <div id="imagesDiv"></div>
-    
+    <div class="images" id="imagesDiv"></div>
+</div>
 </body>
 </html>
