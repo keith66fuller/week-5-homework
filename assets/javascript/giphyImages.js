@@ -14,7 +14,6 @@ $('document').ready( function() {
         method: 'GET',
     })
     .done(function(response) {
-        console.log(response);
         response.forEach(element => {
             topics.push(element.word);
         });
@@ -31,8 +30,6 @@ $('document').ready( function() {
     // Without this, my dynamically generated buttons would not respond to clicks
     // http://learn.jquery.com/events/event-delegation/
     $('#buttonsDiv').on('click', '.topicButton', function(event) {
-        console.log(event);
-        console.log(event.target.id);
         var query = event.target.id;
         var queryUrl = `https://api.giphy.com/v1/gifs/search?api_key=Rg9Rfrh8KQEOzilbobJEVYSckFcwRfEN&q=${query}&limit=10&offset=0&lang=en`;
         
@@ -42,7 +39,6 @@ $('document').ready( function() {
         })
         .done(function(response) {
             $('#imagesDiv').empty();
-            console.log(response);
             response.data.forEach(element => {
                 var url1 = element.images.downsized_still.url;
                 var url2 = element.images.preview_gif.url;
@@ -82,22 +78,12 @@ $('document').ready( function() {
         //So that the submit event does not reload the page, which resets the value of the topics array and wipes
         //out our buttons.
         event.preventDefault();
-        console.log(userInput.value);
         var newTopic = userInput.value;
         $('#userInput').val('');
         
-        if (! aNum.test(newTopic)) {
-            console.log(`${newTopic} not alphanumeric`);
-            return
-        };
-        if (newTopic == '') {
-            console.log('blank topic');
-            return
-        };
-        if (topics.indexOf(newTopic) >= 0) {
-            console.log(`Topic ${newTopic} already exists`);
-            return
-        };
+        if (! aNum.test(newTopic)) { return };
+        if (newTopic == '') { return };
+        if (topics.indexOf(newTopic) >= 0) { return };
         topics.push(newTopic);
         addButton(newTopic);
     });
