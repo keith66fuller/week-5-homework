@@ -10,7 +10,7 @@ $('document').ready( function() {
     ];
 
     $.ajax({
-        url: "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+        url: "https://api.wordnik.com:443/v4/words.json/randomWords?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
         method: 'GET',
     })
     .done(function(response) {
@@ -44,10 +44,11 @@ $('document').ready( function() {
             $('#imagesDiv').empty();
             console.log(response);
             response.data.forEach(element => {
-                var url = element.images.preview_gif.url;
+                var url1 = element.images.downsized_still.url;
+                var url2 = element.images.preview_gif.url;
                 var rating = element.rating.toUpperCase();
-                
-                var image = $('<img>').attr('src',url).addClass('giphyImg');
+                var image = $('<img>').attr('src',url1).addClass('giphyImg').data('url1',url1).data('url2',url2);
+
                 var caption = $('<figcaption>').text(`Rating: ${rating}`)
                 var newDiv = $('<div>').append(caption).append(image);
                 $('#imagesDiv').append(newDiv);
@@ -55,6 +56,13 @@ $('document').ready( function() {
             });
         })
         
+    });
+    $('#imagesDiv').on('click', '.giphyImg', function(event) {
+        if ($(event.target).attr('src') == $(event.target).data('url1')) {
+            $(event.target).attr('src', $(event.target).data('url2'))
+        } else {
+            $(event.target).attr('src', $(event.target).data('url1'))
+        }
     });
     function addButton(element) {
         var button=$('<button>').text(element);
