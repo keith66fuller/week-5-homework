@@ -65,6 +65,8 @@ $('document').ready( function() {
         $(button).attr('id',element);
         $(button).addClass('topicButton');
         $('#buttonsDiv').append(button);
+        // Return the button reference so that we can simulate a click on it elsewhere.
+        return button;
     }
     function renderButtons() {
         topics.forEach(element => {
@@ -85,6 +87,7 @@ $('document').ready( function() {
         if (newTopic == '') { return };
         if (topics.indexOf(newTopic) >= 0) { return };
         topics.push(newTopic);
-        addButton(newTopic);
+        // Simulate a click on the newly added button in order to populate with the new images.
+        addButton(newTopic).click();
     });
 });
